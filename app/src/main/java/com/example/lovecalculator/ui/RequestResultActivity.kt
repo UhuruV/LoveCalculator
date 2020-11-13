@@ -29,22 +29,16 @@ class RequestResultActivity : AppCompatActivity() {
                 .addFormDataPart("fname", firstname)
                 .addFormDataPart("sname", secondname)
                 .build()
+
         }
     }
 
-
-        val requestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
-            .addFormDataPart("fname", firstName)
-            .addFormDataPart("sname", secondname)
-            .build()
-}
-
-private fun registerStudents(requestBody: RequestBody){
+ fun requestResponse(requestBody: RequestBody){
     val apiClient= ApiClient.buildService(ApiInterface::class.java)
     val registrationCall=apiClient.requestPercentage(requestBody)
     registrationCall.enqueue(object : Callback<RequestResponse> {
         override fun onFailure(call: Call<RequestResponse>, t: Throwable) {
-            Toast.makeText(this,t.message, Toast.LENGTH_LONG).show()
+            Toast.makeText(baseContext,t.message, Toast.LENGTH_LONG).show()
         }
 
         override fun onResponse(
@@ -53,8 +47,8 @@ private fun registerStudents(requestBody: RequestBody){
         ) {
             if (response.isSuccessful){
                 val message="Request Successful"
-                Toast.makeText(this,response.body()?.firstName, Toast.LENGTH_LONG).show()
-                startActivity(Intent(this, MainActivity::class.java))
+                Toast.makeText(baseContext,response.body()?.firstName, Toast.LENGTH_LONG).show()
+                startActivity(Intent(baseContext, MainActivity::class.java))
 
 
                 var i = progress_circular!!.progress
@@ -72,7 +66,7 @@ private fun registerStudents(requestBody: RequestBody){
 
             }
             else{
-                Toast.makeText(this,response.errorBody().toString(), Toast.LENGTH_LONG).show()
+                Toast.makeText(baseContext,response.errorBody().toString(), Toast.LENGTH_LONG).show()
             }
         }
     })
