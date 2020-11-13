@@ -30,6 +30,16 @@ class RequestResultActivity : AppCompatActivity() {
                 .addFormDataPart("sname", secondname)
                 .build()
 
+            if ( firstname.isBlank()){
+                etFname.error="Password Required"
+            }
+            if ( secondname.isBlank()){
+                etSname.error="Please Confirm Your Password"
+            }
+            else {
+                requestResponse(requestBody)
+            }
+
         }
     }
 
